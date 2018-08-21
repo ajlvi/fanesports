@@ -20,12 +20,11 @@ specialChars = { "&agrave;":"a", "&egrave;":"e", "&Egrave;":"E", "&igrave;":"i",
 def acquireInfo(event, write=True):
 	"""
 	This is the high-level function meant to be run by the user.
-	It returns two pandas dataframes: the standings and the cards in the top 8 decklists.
-	The top 8 decks get returned regardless of whether you wanted them. For limited events,
-	we'll throw that data away after it's acquired.
+	It returns a pandas dataframes with all the cards in the top 8 decklists.
+	The names of the pilots are included but aren't cross-referenced against the standings.
 
-	If you want to work with the pandas dataframes, run this file within a Python session
-	and set the write variable to False. A tuple (resultsdf, decksdf) will be returned.
+	If you want to work with the pandas dataframe, run this file within a Python session
+	and set the write variable to False.
 	"""
 	url = "http://magic.wizards.com/en/events/coverage/%s//tournament-results" %(event)
 	page = urllib2.urlopen(url)
