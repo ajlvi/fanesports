@@ -21,7 +21,7 @@ specialChars = { "&agrave;":"a", "&egrave;":"e", "&Egrave;":"E", "&igrave;":"i",
 "&szlig;":"ss", "&AElig;":"ae", "&aelig;":"ae", "&scaron;":"s", "&Scaron;":"S",\
 "&atilde;":"a", "&Atilde;":"a", "&ntilde;":"n", "&otilde;":"o", "&oelig;":"oe", "&rsquo;":"'" }
 
-def acquireInfo(event, write=True):
+def acquireInfo(event, version=1, write=True):
 	"""
 	This is the high-level function meant to be run by the user.
 	It returns a pandas dataframe with the standings as of round 15.
@@ -29,8 +29,13 @@ def acquireInfo(event, write=True):
 	If you want to work with the pandas dataframe, run this file within a Python session
 	and set the write variable to False.
 	"""
-	url = "http://magic.wizards.com/en/events/coverage/%s//tournament-results" %(event)
-	page = urllib2.urlopen(url)
+	if version == 1:
+		url = "http://magic.wizards.com/en/events/coverage/%s//tournament-results" %(event)
+	elif version == 2:
+		url = "http://magic.wizards.com/en/events/coverage/%s//tournament-results-and-decklists" %(event)
+	try:
+		page = urllib2.urlopen(url)
+	except urllib2.HTTPError: acquireInfo(event, 2, write)
 	lines = page.readlines()
 	r15url = getRound15URL(lines, event)
 	top8 = round16(lines, event)
