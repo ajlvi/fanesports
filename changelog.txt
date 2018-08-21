@@ -1,0 +1,13 @@
+18.08.21
+  (a) The script that produces the cards present in the knockout rounds (event_decklists.py) no longer has the number of decks hardcoded. This was tested on pt25a and works fine. I don't anticipate problems with it for worlds or for GP Detroit (team modern).
+  
+  (b) A new file, event_round1.py, now exists. It will work as soon as a link to round 1 pairings exists, and will output a .json file with a list of everyone in the tournament.
+  --WARNINGS--
+    (i) Players with byes tend to appear in the round one pairings saying that they have a bye. I would guess this happens in 98% of GPs, and probably all recent ones. But it is not 100%. It is possible that only the matches between two people will appear in the round one pairings. So I can't guarantee this is foolproof. (If this is the case you'll notice absolutely nobody is in the tournament.)
+    (ii) For some players like Jonathan [Lobo] Melamed, the name you find in the round one pairings may differ from the name you're expecting. I'm not trying to do any corrections of that sort with this file, I'm just providing the raw names for you. Be careful!
+  -- --
+  This file has been tested some on recent GPs and PTs and works for them. This includes PT25A.
+  
+  (c) A new file, event_round4.py, now exists. It presently prints True or False depending on whether round 4 pairings exist. More work will be done on this when I know exactly what is desired.
+
+  (d) Comments on files are updated to reflect current usage.
