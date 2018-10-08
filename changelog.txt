@@ -1,3 +1,7 @@
+18.10.08
+  An archaic version of the script that included cash information broke events_playerlist.py when a GP had fewer than 64 people receive pro points. That functionality has been deactivated, so this shouldn't come up again.
+
+
 18.08.21
   (a) The script that produces the cards present in the knockout rounds (event_decklists.py) no longer has the number of decks hardcoded. This was tested on pt25a and works fine. I don't anticipate problems with it for worlds or for GP Detroit (team modern).
   
