@@ -6,11 +6,11 @@ from sys import argv
 
 # --- here's the static data we need: info about MP-PP conversions and cash --- #
 gpppdict = { 30:1, 31:1, 32:1, 33:2, 34:2, 35:2, 36:3, 37:3, 38:3, 39:4, 40:4, 41:4, 42:4, 43:4, 44:4, 45:4 }
-gpcash = [10000, 5000] + [2500]*2 + [1500]*4 + [1000]*8 + [500]*16 + [250]*32
+#gpcash = [10000, 5000] + [2500]*2 + [1500]*4 + [1000]*8 + [500]*16 + [250]*32
 ptppdict = {0: 3, 1: 3, 2: 3, 3: 3, 4: 3, 5: 3, 6: 3, 7: 3, 8: 3, 9: 3, 10: 3, 11: 3, 12: 3, 13: 3, 14: 3, 15: 3, 16: 3, 17: 3, 18: 3, 19: 3, 20: 3, 21: 3, 22: 3, 23: 3, 24: 3, 25: 3, 26: 3, 27: 4, 28: 5, 29: 5, 30: 6, 31: 7, 32: 8, 33: 10, 34: 11, 35: 12, 36: 15, 37: 15, 38: 15, 39: 15, 40: 15, 41: 15, 42: 15, 43: 15, 44: 15, 45: 15}
-ptcash = [50000, 20000, 15000, 12500, 10000, 9000, 7500, 6000] + [5000]*8 + [3000]*8 + [2000]*8 + [1500]*16 + [1000]*16
+#ptcash = [50000, 20000, 15000, 12500, 10000, 9000, 7500, 6000] + [5000]*8 + [3000]*8 + [2000]*8 + [1500]*16 + [1000]*16
 wcppdict = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0, 10: 0, 11: 0, 12: 1, 13: 1, 14: 1, 15: 2, 16: 2, 17: 2, 18: 3, 19: 3, 20: 3, 21: 4, 22: 4, 23: 4, 24: 5, 25: 5, 26: 5, 27: 6, 28: 6, 29: 6, 30: 7, 31: 7, 32: 7, 33: 8, 34: 8, 35: 8, 36: 9, 37: 9, 38: 9, 39: 10, 40: 10, 41: 10, 42: 11}
-wccash = [100000, 50000] + [25000]*2 + [10000]*4 + [5000]*8 + [2500]*8
+#wccash = [100000, 50000] + [25000]*2 + [10000]*4 + [5000]*8 + [2500]*8
 specialChars = { "&agrave;":"a", "&egrave;":"e", "&Egrave;":"E", "&igrave;":"i",\
 "&ograve;":"o", "&ugrave;":"u", "&yacute;":"y", '&ccedil;':'c', "&eth;": "d", \
 "&aacute;":"a", "&eacute;":"e", "&iacute;":"i", "&oacute;":"o", "&uacute;":"u",\
@@ -134,7 +134,7 @@ def compileResults(top8results, playerlist, event):
 		df.at[2, "PP"] = 6
 		for i in [3, 4]: df.at[i, "PP"] = 5
 		for i in [5, 6, 7, 8]: df.at[i, "PP"] = 4
-		df["cash"] = gpcash + [0]*(len(df) - len(gpcash))
+#		df["cash"] = gpcash + [0]*(len(df) - len(gpcash))
 	elif event[:2] == "pt":
 		df["PP"] = df["MP"].map(ptppdict)
 		df.at[1, "PP"] = 30
@@ -145,12 +145,12 @@ def compileResults(top8results, playerlist, event):
 		df.at[6, "PP"] = 18
 		df.at[7, "PP"] = 17
 		df.at[8, "PP"] = 16
-		df["cash"] = ptcash + [0]*(len(df) - len(ptcash))
+#		df["cash"] = ptcash + [0]*(len(df) - len(ptcash))
 	elif event[:-2].lower() == "wc":
 		df["PP"] = df["MP"].map(wcppdict)
 		df.at[1, "PP"] = df.at[1, "PP"] + 4
 		df.at[2, "PP"] = df.at[2, "PP"] + 2
-		df["cash"] = wccash
+#		df["cash"] = wccash
 	return df
 
 def round16(lines, gp):
