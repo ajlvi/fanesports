@@ -1,3 +1,10 @@
+19.01.28
+  Two updates today:
+  (a) Starting with gpnj19 the URL for the standings has changed. This has been updated in event_playerlist.py.
+  
+  (b) Portions of the top 8 bracket are, from time to time, incorrectly boldfaced, leading to incorrect results. I've at least added a clause that checks to see if the winner is mentioned with a "trophy line" to ensure that match is accurate.
+
+
 18.10.08
   An archaic version of the script that included cash information broke events_playerlist.py when a GP had fewer than 64 people receive pro points. That functionality has been deactivated, so this shouldn't come up again.
 
