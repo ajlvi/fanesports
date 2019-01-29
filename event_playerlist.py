@@ -30,12 +30,14 @@ def acquireInfo(event, version=1, write=True):
 	and set the write variable to False.
 	"""
 	if version == 1:
-		url = "http://magic.wizards.com/en/events/coverage/%s//tournament-results" %(event)
+		url = "http://magic.wizards.com/en/events/coverage/%s/" %(event)
 	elif version == 2:
+		url = "http://magic.wizards.com/en/events/coverage/%s//tournament-results" %(event)
+	elif version == 3:
 		url = "http://magic.wizards.com/en/events/coverage/%s//tournament-results-and-decklists" %(event)
 	try:
 		page = urllib2.urlopen(url)
-	except urllib2.HTTPError: acquireInfo(event, 2, write)
+	except urllib2.HTTPError: acquireInfo(event, version+1, write)
 	lines = page.readlines()
 	r15url = getRound15URL(lines, event)
 	top8 = round16(lines, event)
