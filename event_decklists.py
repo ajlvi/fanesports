@@ -26,7 +26,7 @@ def acquireInfo(event, write=True):
 	If you want to work with the pandas dataframe, run this file within a Python session
 	and set the write variable to False.
 	"""
-	url = "http://magic.wizards.com/en/events/coverage/%s//tournament-results" %(event)
+	url = "http://magic.wizards.com/en/events/coverage/%s/" %(event)
 	page = urllib2.urlopen(url)
 	lines = page.readlines()
 	cardlist = rawdecklists(lines)
