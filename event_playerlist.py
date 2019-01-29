@@ -42,7 +42,7 @@ def acquireInfo(event, version=1, write=True):
 	r15url = getRound15URL(lines, event)
 	top8 = round16(lines, event)
 	playerlist = rawresults(r15url, event)
-	resultsdf = compileResults(top8, playerlist, event)
+	resultsdf = compileResults(top8, playerlist, event, lines)
 
 	#converting to JSON as output. we always output the standings.
 	if write:
@@ -121,13 +121,13 @@ def rawresults2(r15url, event, offset=4):
 			playerlist.append([place, name, pts])
 	return playerlist
 
-def compileResults(top8results, playerlist, event):
+def compileResults(top8results, playerlist, event, lines):
 	"""
 	This function processes the final standings and returns a dataframe with
 	relevant results data in it. It takes as input the playerlist from rawresults and
 	the top8 data as compiled by round16.
 	"""
-	finishorder = arrange(top8results, playerlist[:8])
+	finishorder = arrange(top8results, playerlist[:8], lines)
 	df = pd.DataFrame.from_records(finishorder + playerlist[8:], columns=["place", "name", "MP"], index="place")
 	#now to add in pro points.
 	if event[:2] == "gp":
@@ -248,7 +248,7 @@ def namify(name):
 	else:
 		return name
 
-def arrange(top8results, playerlist):
+def arrange(top8results, playerlist, lines):
 	#top8results are the matches from the top8, playerlist is the list of seeds
 	#first we need to figure out who lost in which round of the top 8
 	correctstands = [] #eventually we'll return this, but we have to populate it
@@ -298,7 +298,17 @@ def arrange(top8results, playerlist):
 	for i in range(len(qfsorted)):
 		entry = qfsorted[i]
 		correctstands.append([i+5, entry[1], entry[2]])
-	return correctstands
+		
+	#new today: check the trophy line
+	winner_line = [a for a in lines if "event-info--champion" in a]
+	assert len(winner_line) == 1; wl = winner_line[0]
+	trophy = wl.split('champion">')[1].split("</p>")[0]
+	#okay, now we'll see. hopefully the trophy line matches the name we have
+	#for the winner. otherwise, if it matches 2nd, we'll swap. otherwise, eff it.
+	if melt(trophy) == melt(correctstands[0][1]): return correctstands
+	elif melt(trophy) == melt(correctstands[1][1]):
+		return [correctstands[1]] + [correctstands[0]] + correctstands[2:]
+	else: return correctstands
 
 def melt(name):
 	return reduce(lambda a, b: a+b, sorted([ch for ch in name if ch.isalpha()]))
